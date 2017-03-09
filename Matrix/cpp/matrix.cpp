@@ -45,6 +45,7 @@ void OnMult(int m_ar, int m_br)
 	for(i=0; i<m_ar; i++)
 	{	for( j=0; j<m_br; j++)
 		{	temp = 0;
+			#pragma omp parallel for reduction(+:temp) num_threads(nthreads)
 			for( k=0; k<m_ar; k++)
 			{	
 				temp += pha[i*m_ar+k] * phb[k*m_br+j];
@@ -106,6 +107,7 @@ void OnMultLine(int m_ar, int m_br)
 	for(i=0; i<m_ar; i++)
 	{	for( j=0; j<m_br; j++)
 		{	
+			#pragma omp parallel for num_threads(nthreads)
 			for( k=0; k<m_ar; k++)
 			{	
 				phc[i*m_ar+k] += pha[i*m_ar+j] * phb[j*m_br+k];
@@ -175,9 +177,6 @@ int main (int argc, char *argv[])
   	long long values[2];
   	int ret;
 	
-
-  	/*		COMENTARIO A RETIRAR
-
 	ret = PAPI_library_init( PAPI_VER_CURRENT );
 	if ( ret != PAPI_VER_CURRENT )
 		std::cout << "FAIL" << endl;
@@ -194,8 +193,6 @@ int main (int argc, char *argv[])
 	ret = PAPI_add_event(EventSet,PAPI_L2_DCM);
 	if (ret != PAPI_OK) cout << "ERRO: PAPI_L2_DCM" << endl;
 
-	*/
-
 	op=1;
 	do {
 		cout << endl << "1. Multiplication" << endl;
@@ -210,9 +207,9 @@ int main (int argc, char *argv[])
 
 
 		// Start counting
-		/*ret = PAPI_start(EventSet);
+		ret = PAPI_start(EventSet);
 		if (ret != PAPI_OK) cout << "ERRO: Start PAPI" << endl;
-*/
+
 		switch (op){
 			case 1: 
 				OnMult(lin, col);
@@ -222,7 +219,7 @@ int main (int argc, char *argv[])
 				break;
 		}
 
-  		/*ret = PAPI_stop(EventSet, values);
+  		ret = PAPI_stop(EventSet, values);
   		if (ret != PAPI_OK) cout << "ERRO: Stop PAPI" << endl;
   		printf("L1 DCM: %lld \n",values[0]);
   		printf("L2 DCM: %lld \n",values[1]);
@@ -230,12 +227,12 @@ int main (int argc, char *argv[])
 		ret = PAPI_reset( EventSet );
 		if ( ret != PAPI_OK )
 			std::cout << "FAIL reset" << endl; 
-*/
+
 
 
 	}while (op != 0);
 
-		/*ret = PAPI_remove_event( EventSet, PAPI_L1_DCM );
+		ret = PAPI_remove_event( EventSet, PAPI_L1_DCM );
 		if ( ret != PAPI_OK )
 			std::cout << "FAIL remove event" << endl; 
 
@@ -245,6 +242,6 @@ int main (int argc, char *argv[])
 
 		ret = PAPI_destroy_eventset( &EventSet );
 		if ( ret != PAPI_OK )
-			std::cout << "FAIL destroy" << endl;*/
+			std::cout << "FAIL destroy" << endl;
 
 }
