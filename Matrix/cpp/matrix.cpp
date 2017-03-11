@@ -42,21 +42,12 @@ void OnMult(int m_ar, int m_br)
 
     Time1 = clock();
 
-<<<<<<< HEAD
 	for (i=0; i < m_ar; i++) {	
 		for (j = 0; j < m_br; j++) {	
 			temp = 0;
-			for (k=0; k<m_ar; k++) {	
-				temp += pha[i * m_ar + k] * phb[k * m_br + j];
-=======
-	for(i=0; i<m_ar; i++)
-	{	for( j=0; j<m_br; j++)
-		{	temp = 0;
 			#pragma omp parallel for reduction(+:temp) num_threads(nthreads)
-			for( k=0; k<m_ar; k++)
-			{	
+			for(k = 0; k < m_ar; k++) {	
 				temp += pha[i*m_ar+k] * phb[k*m_br+j];
->>>>>>> 6f8ea1e98a4397c518081d0f76bbd5b4feda6191
 			}
 			phc[i * m_ar + j] = temp;
 		}
@@ -80,10 +71,6 @@ void OnMult(int m_ar, int m_br)
 }
 
 
-<<<<<<< HEAD
-void OnMultLine(int m_ar, int m_br) {
-    
-=======
 void OnMultLine(int m_ar, int m_br)
 {
     SYSTEMTIME Time1, Time2;
@@ -114,12 +101,10 @@ void OnMultLine(int m_ar, int m_br)
 
     Time1 = clock();
 
-	for(i=0; i<m_ar; i++)
-	{	for( j=0; j<m_br; j++)
-		{	
+	for(i = 0; i < m_ar; i++) {	
+		for(j = 0; j < m_br; j++) {	
 			#pragma omp parallel for num_threads(nthreads)
-			for( k=0; k<m_ar; k++)
-			{	
+			for(k = 0; k < m_ar; k++) {	
 				phc[i*m_ar+k] += pha[i*m_ar+j] * phb[j*m_br+k];
 			}
 		}
@@ -131,8 +116,8 @@ void OnMultLine(int m_ar, int m_br)
 	cout << st;
 
 	cout << "Result matrix: " << endl;
-	for(i=0; i<1; i++)
-	{	for(j=0; j<min(10,m_br); j++)
+	for(i = 0; i < 1; i++){	
+		for(j = 0; j < min(10,m_br); j++)
 			cout << phc[j] << " ";
 	}
 	cout << endl;
@@ -140,23 +125,10 @@ void OnMultLine(int m_ar, int m_br)
     free(pha);
     free(phb);
     free(phc);
->>>>>>> 6f8ea1e98a4397c518081d0f76bbd5b4feda6191
     
 }
 
-
-float produtoInterno(float *v1, float *v2, int col) {
-	int i;
-	float soma=0.0;	
-
-	for (i = 0; i < col; i++)
-		soma += v1[i] * v2[i];
-	
-	return(soma);
-
-}
-
-void handle_error (int retval) {
+void handle_error(int retval) {
   printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
   exit(1);
 }
@@ -175,8 +147,7 @@ void init_papi() {
 }
 
 
-int main (int argc, char *argv[])
-{
+int main (int argc, char *argv[]) {
 
 	char c;
 	int lin, col, nt=1;
@@ -202,7 +173,7 @@ int main (int argc, char *argv[])
 	ret = PAPI_add_event(EventSet,PAPI_L2_DCM);
 	if (ret != PAPI_OK) cout << "ERRO: PAPI_L2_DCM" << endl;
 
-	op=1;
+	op = 1;
 	do {
 		cout << endl << "1. Multiplication" << endl;
 		cout << "2. Line Multiplication" << endl;
@@ -239,7 +210,7 @@ int main (int argc, char *argv[])
 
 
 
-	}while (op != 0);
+	} while (op != 0);
 
 		ret = PAPI_remove_event( EventSet, PAPI_L1_DCM );
 		if ( ret != PAPI_OK )
