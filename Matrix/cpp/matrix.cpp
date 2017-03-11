@@ -34,22 +34,21 @@ void OnMult(int m_ar, int m_br)
 
 
 
-	for(i=0; i<m_br; i++)
-		for(j=0; j<m_br; j++)
+	for (i = 0; i < m_br; i++)
+		for (j =0; j<m_br; j++)
 			phb[i*m_br + j] = (double)(i+1);
 
 
 
     Time1 = clock();
 
-	for(i=0; i<m_ar; i++)
-	{	for( j=0; j<m_br; j++)
-		{	temp = 0;
-			for( k=0; k<m_ar; k++)
-			{	
-				temp += pha[i*m_ar+k] * phb[k*m_br+j];
+	for (i=0; i < m_ar; i++) {	
+		for (j = 0; j < m_br; j++) {	
+			temp = 0;
+			for (k=0; k<m_ar; k++) {	
+				temp += pha[i * m_ar + k] * phb[k * m_br + j];
 			}
-			phc[i*m_ar+j]=temp;
+			phc[i * m_ar + j] = temp;
 		}
 	}
 
@@ -58,9 +57,9 @@ void OnMult(int m_ar, int m_br)
 	sprintf(st, "Time: %3.3f seconds\n", (double)(Time2 - Time1) / CLOCKS_PER_SEC);
 	cout << st;
 
-	cout << "Result matrix: " << endl;
-	for(i=0; i<1; i++)
-	{	for(j=0; j<min(10,m_br); j++)
+	cout << "Rsesult matrix: " << endl;
+	for (i = 0; i < 1; i++) {	
+		for (j = 0; j < min(10, m_br); j++)
 			cout << phc[j] << " ";
 	}
 	cout << endl;
@@ -68,32 +67,27 @@ void OnMult(int m_ar, int m_br)
     free(pha);
     free(phb);
     free(phc);
-	
-	
 }
 
 
-void OnMultLine(int m_ar, int m_br)
-{
+void OnMultLine(int m_ar, int m_br) {
     
     
 }
 
 
-float produtoInterno(float *v1, float *v2, int col)
-{
+float produtoInterno(float *v1, float *v2, int col) {
 	int i;
 	float soma=0.0;	
 
-	for(i=0; i<col; i++)
-		soma += v1[i]*v2[i];
+	for (i = 0; i < col; i++)
+		soma += v1[i] * v2[i];
 	
 	return(soma);
 
 }
 
-void handle_error (int retval)
-{
+void handle_error (int retval) {
   printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
   exit(1);
 }

@@ -32,7 +32,7 @@ def multiplyMatrices(lines, cols):
 			phc[i][j] = temp
 
 	time2 = time.time()
-
+	
 	print("Time: " + str(time2 - time1) + " seconds")
 
 	del pha, phb, phc
