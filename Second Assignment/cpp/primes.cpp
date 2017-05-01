@@ -5,11 +5,12 @@
 #include <math.h>
 #include <vector>
 #include <string>
-#include <papi.h>
 #include <omp.h>
+#include "./papi/papi.h"
 
 using namespace std;
 
+const string DISTRIBUTED = "distributed";
 const string PARALLEL = "parallel";
 const string LINEAR = "linear";
 
@@ -50,6 +51,7 @@ int main (int argc, char ** argv) {
   string run_method;
   unsigned int n, n_threads;
   char time_string[100];
+  int ret;
 
 
   if (argc != 3 && argc != 4) {
@@ -61,10 +63,12 @@ int main (int argc, char ** argv) {
   copy(argv + 1, argv + argc, back_inserter(args));
   run_method = args[0];
 
-  if (!(run_method == PARALLEL || run_method == LINEAR)) {
+  if (!(run_method == PARALLEL || run_method == LINEAR || run_method == DISTRIBUTED)) {
     cout << "Please define the 1st argument as <linear/parallel>" << endl;
     return -1;
   }
+
+  init_papi_events();
 
   if (run_method == LINEAR) {
     string_stream_n << args[1];
@@ -82,12 +86,16 @@ int main (int argc, char ** argv) {
     clock_gettime(CLOCK_MONOTONIC, &start);
     sieve_of_eratosthenes_parallel(n_threads, exp2(n));
     clock_gettime(CLOCK_MONOTONIC, &finish);
+  } else if (run_method == DISTRIBUTED) {
+    cout << "Not implemented yet" << endl;
   }
 
   elapsed = (finish.tv_sec - start.tv_sec);
 	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
 	sprintf(time_string, "Time: %3.3f seconds\n", (double)elapsed);
 	cout << time_string;
+
+  stop_papi_events();
 
   cout << endl;
 }

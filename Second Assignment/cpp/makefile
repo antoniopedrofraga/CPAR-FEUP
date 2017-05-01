@@ -1,2 +1,2 @@
-primes: *.cpp
-	g++ -O2 *.cpp -lpapi -fopenmp -o primes
+primes: primes.cpp ./papi/papi.cpp
+	g++ -O2 primes.cpp ./papi/papi.cpp -lpapi -fopenmp -o primes
