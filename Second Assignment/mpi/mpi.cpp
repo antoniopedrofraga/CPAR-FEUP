@@ -15,32 +15,100 @@ const string PARALLEL = "parallel";
 const string LINEAR = "linear";
 const int ROOT = 0;
 
-void sieve_of_eratosthenes_linear(long long n) {
-    vector<bool> prime(n-1, true);
 
-    long long p, i;
+long long get_lower_bound(int rank, long long number_of_primes, int size) {
+  return ((long long)rank * number_of_primes) / (long long)size;
+}
+long long  get_higher_bound(int rank, long long number_of_primes, int size) {
+  return ((((long long)rank + 1) * number_of_primes) / (long long)size) - 1;
+}
+long long  get_block_size(long long low_bound, long long high_bound) {
+  return high_bound - low_bound;
+}
+
+/*Feupinhocomissao2013*/
+int sieve_of_eratosthenes_linear(int rank, long long n, int size) {
+
+    long long lower_bound = 2 + get_lower_bound(rank, n, size);
+    long long higher_bound = 2 + get_higher_bound(rank, n, size);
+    long long block_size = get_block_size(lower_bound, higher_bound);
+
+    vector<bool> prime(block_size, true);
+
+    long long p = 2, j;
     long long limit = sqrt(n);
 
-    for (p = 2; p <= limit; p++) {
-        if (prime[p] == true) {
-            for (i = p * 2; i <= n; i += p)
-                prime[i] = false;
+    while(exp2(p) <= limit) {
+        if (exp2(p) < lower_bound) {
+      			if (lower_bound % p == 0) { j = lower_bound; }
+      			else { j = lower_bound + (p - (lower_bound % p)); }
+      	} else {
+    			j = exp2(p);
         }
+        for (long long i = j; i < higher_bound; i += p) {
+			      prime[i - lower_bound] = false;
+		    }
+    		if (rank == ROOT) {
+    			for(long long i = p + 1; i < higher_bound; i++) {
+    				if (prime[i - lower_bound]) { p = i; break; }
+    			}
+        }
+        MPI_Bcast(&p, 1, MPI_INT, ROOT, MPI_COMM_WORLD);
     }
 
-}
-void sieve_of_eratosthenes_parallel(int n_threads, long long n) {
-    vector<bool> prime(n-1, true);
+    int total_primes = 0;
+    int number_of_primes = 0;
 
-    long long p, i;
+    for(long long i = 0; i < block_size; i++) {
+			if (prime[i])
+				number_of_primes++;
+		}
+
+    MPI_Reduce(&number_of_primes, &total_primes, 1, MPI_INT, MPI_SUM, ROOT, MPI_COMM_WORLD);
+
+    return total_primes;
+}
+int sieve_of_eratosthenes_parallel(int rank, long long n, int size, int n_threads) {
+
+    long long lower_bound = 2 + get_lower_bound(rank, n, size);
+    long long higher_bound = 2 + get_higher_bound(rank, n, size);
+    long long block_size = get_block_size(lower_bound, higher_bound);
+
+    vector<bool> prime(block_size, true);
+
+    long long p = 2, j;
     long long limit = sqrt(n);
 
-    #pragma omp parallel for schedule(dynamic) num_threads(n_threads)
-    for (p = 2; p <= limit; p++)
-        if (prime[p] == true) {
-            for (i = p * 2; i <= n; i += p)
-                prime[i] = false;
+    while(exp2(p) <= limit) {
+        if (exp2(p) < lower_bound) {
+      			if (lower_bound % p == 0) { j = lower_bound; }
+      			else { j = lower_bound + (p - (lower_bound % p)); }
+      	} else {
+    			j = exp2(p);
         }
+        #pragma omp parallel for num_threads(n_threads)
+        for (long long i = j; i < higher_bound; i += p) {
+			      prime[i - lower_bound] = false;
+		    }
+    		if (rank == ROOT) {
+    			for(long long i = p + 1; i < higher_bound; i++) {
+    				if (prime[i - lower_bound]) { p = i; break; }
+    			}
+        }
+        MPI_Bcast(&p, 1, MPI_INT, ROOT, MPI_COMM_WORLD);
+    }
+
+    int total_primes = 0;
+    int number_of_primes = 0;
+
+    for(long long i = 0; i < block_size; i++) {
+			if (prime[i])
+				number_of_primes++;
+		}
+
+    MPI_Reduce(&number_of_primes, &total_primes, 1, MPI_INT, MPI_SUM, ROOT, MPI_COMM_WORLD);
+
+    return total_primes;
 }
 void init_mpi(int * size, int * rank) {
   MPI::Init();
@@ -80,29 +148,33 @@ int main (int argc, char ** argv) {
   if (run_method == LINEAR) {
     string_stream_n << args[1];
     string_stream_n >> n;
-
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    sieve_of_eratosthenes_linear(exp2(n));
-    clock_gettime(CLOCK_MONOTONIC, &finish);
+    if ( rank == ROOT) { clock_gettime(CLOCK_MONOTONIC, &start); }
+    int total_primes = sieve_of_eratosthenes_linear(rank, exp2(n), size);
+    if ( rank == ROOT) {
+      clock_gettime(CLOCK_MONOTONIC, &finish);
+      cout << "2," << n << "," << size << ", Number of primes - " << total_primes << endl;
+    }
   } else if (run_method == PARALLEL) {
     string_stream_n_threads << args[1];
     string_stream_n_threads >> n_threads;
     string_stream_n << args[2];
     string_stream_n >> n;
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    sieve_of_eratosthenes_parallel(n_threads, exp2(n));
-    clock_gettime(CLOCK_MONOTONIC, &finish);
+    if ( rank == ROOT) { clock_gettime(CLOCK_MONOTONIC, &start); }
+    int total_primes = sieve_of_eratosthenes_parallel(rank, exp2(n), size, n_threads);
+    if ( rank == ROOT) {
+      clock_gettime(CLOCK_MONOTONIC, &finish);
+      cout << "2," << n << "," << size << ", Number of primes" << total_primes << ", Type" << run_method << ", Number of threads" << n_threads << endl;
+    }
   }
-
-  elapsed = (finish.tv_sec - start.tv_sec);
-	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
-	sprintf(time_string, "Time: %3.3f seconds\n", (double)elapsed);
-	cout << time_string;
-
+  if ( rank == ROOT) {
+    elapsed = (finish.tv_sec - start.tv_sec);
+  	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+  	sprintf(time_string, "Time: %3.3f seconds\n", (double)elapsed);
+  	cout << time_string;
+  }
+  if (rank == ROOT) { print_papi_events(); }
   stop_papi_events();
-
   MPI::Finalize();
 
-  cout << endl;
 }
