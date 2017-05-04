@@ -10,7 +10,6 @@
 
 using namespace std;
 
-const string DISTRIBUTED = "distributed";
 const string PARALLEL = "parallel";
 const string LINEAR = "linear";
 
@@ -33,7 +32,7 @@ void sieve_of_eratosthenes_parallel(int n_threads, long long n) {
     long long p, i;
     long long limit = sqrt(n);
 
-    #pragma omp parallel for schedule(dynamic) num_threads(n_threads)
+    #pragma omp parallel for num_threads(n_threads)
     for (p = 2; p <= limit; p++)
         if (prime[p] == true) {
             for (i = p * 2; i <= n; i += p)
@@ -48,7 +47,7 @@ int main (int argc, char ** argv) {
   vector<string> args;
   stringstream string_stream_n, string_stream_n_threads;
   string run_method;
-  unsigned int n, n_threads;
+  unsigned int n, n_threads = -1;
   char time_string[100];
   int ret;
 
@@ -62,7 +61,7 @@ int main (int argc, char ** argv) {
   copy(argv + 1, argv + argc, back_inserter(args));
   run_method = args[0];
 
-  if (!(run_method == PARALLEL || run_method == LINEAR || run_method == DISTRIBUTED)) {
+  if (!(run_method == PARALLEL || run_method == LINEAR)) {
     cout << "Please define the 1st argument as <linear/parallel>" << endl;
     return -1;
   }
@@ -85,15 +84,14 @@ int main (int argc, char ** argv) {
     clock_gettime(CLOCK_MONOTONIC, &start);
     sieve_of_eratosthenes_parallel(n_threads, exp2(n));
     clock_gettime(CLOCK_MONOTONIC, &finish);
-  } else if (run_method == DISTRIBUTED) {
-    cout << "Not implemented yet" << endl;
   }
 
+  int num_threads = n_threads == -1 ? 1 : n_threads;
   elapsed = (finish.tv_sec - start.tv_sec);
 	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
 	sprintf(time_string, "%3.3f", (double)elapsed);
   print_papi_events();
-  cout << "no_mpi," << run_method << "," << n << "," << "no_mpi" << ","  << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
+  cout << "no_mpi," << num_threads << "," << run_method << "," << n << "," << "no_mpi" << ","  << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
 
   stop_papi_events();
 }

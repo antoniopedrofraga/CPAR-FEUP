@@ -26,7 +26,6 @@ long long  get_block_size(long long low_bound, long long high_bound) {
   return high_bound - low_bound;
 }
 
-/*Feupinhocomissao2013*/
 void sieve_of_eratosthenes_linear(int rank, long long n, int size) {
 
     long long lower_bound = 2 + get_lower_bound(rank, n, size);
@@ -145,7 +144,8 @@ int main (int argc, char ** argv) {
   	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
   	sprintf(time_string, "%3.3f", (double)elapsed);
     print_papi_events();
-    cout << "mpi," << run_method << "," << n << "," << size << "," << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
+    int num_threads = n_threads == -1 ? 1 : n_threads;
+    cout << "no_mpi," << num_threads << "," << run_method << "," << n << "," << "no_mpi" << ","  << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
   }
   stop_papi_events();
   MPI::Finalize();
