@@ -6,6 +6,7 @@
 using namespace std;
 
 int EventSet = PAPI_NULL;
+long long values[2];
 
 void handle_error(int retval) {
   printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
@@ -50,13 +51,16 @@ int init_papi_events() {
 }
 int print_papi_events() {
   int ret;
-  long long values[2];
 
   ret = PAPI_stop(EventSet, values);
   if (ret != PAPI_OK) cout << "ERRO: Stop PAPI" << endl;
-  printf("L1 DCM: %lld \n",values[0]);
-  printf("L2 DCM: %lld \n",values[1]);
   return ret;
+}
+long long get_l1_dcm() {
+  return values[0];
+}
+long long get_l2_dcm() {
+  return values[1];
 }
 int stop_papi_events() {
   int ret;

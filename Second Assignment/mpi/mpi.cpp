@@ -27,7 +27,7 @@ long long  get_block_size(long long low_bound, long long high_bound) {
 }
 
 /*Feupinhocomissao2013*/
-int sieve_of_eratosthenes_linear(int rank, long long n, int size) {
+void sieve_of_eratosthenes_linear(int rank, long long n, int size) {
 
     long long lower_bound = 2 + get_lower_bound(rank, n, size);
     long long higher_bound = 2 + get_higher_bound(rank, n, size);
@@ -55,20 +55,8 @@ int sieve_of_eratosthenes_linear(int rank, long long n, int size) {
         }
         MPI_Bcast(&p, 1, MPI_INT, ROOT, MPI_COMM_WORLD);
     }
-
-    int total_primes = 0;
-    int number_of_primes = 0;
-
-    for(long long i = 0; i < block_size; i++) {
-			if (prime[i])
-				number_of_primes++;
-		}
-
-    MPI_Reduce(&number_of_primes, &total_primes, 1, MPI_INT, MPI_SUM, ROOT, MPI_COMM_WORLD);
-
-    return total_primes;
 }
-int sieve_of_eratosthenes_parallel(int rank, long long n, int size, int n_threads) {
+void sieve_of_eratosthenes_parallel(int rank, long long n, int size, int n_threads) {
 
     long long lower_bound = 2 + get_lower_bound(rank, n, size);
     long long higher_bound = 2 + get_higher_bound(rank, n, size);
@@ -97,18 +85,6 @@ int sieve_of_eratosthenes_parallel(int rank, long long n, int size, int n_thread
         }
         MPI_Bcast(&p, 1, MPI_INT, ROOT, MPI_COMM_WORLD);
     }
-
-    int total_primes = 0;
-    int number_of_primes = 0;
-
-    for(long long i = 0; i < block_size; i++) {
-			if (prime[i])
-				number_of_primes++;
-		}
-
-    MPI_Reduce(&number_of_primes, &total_primes, 1, MPI_INT, MPI_SUM, ROOT, MPI_COMM_WORLD);
-
-    return total_primes;
 }
 void init_mpi(int * size, int * rank) {
   MPI::Init();
@@ -144,15 +120,13 @@ int main (int argc, char ** argv) {
 
   init_mpi(&size, &rank);
   init_papi_events();
-
   if (run_method == LINEAR) {
     string_stream_n << args[1];
     string_stream_n >> n;
     if ( rank == ROOT) { clock_gettime(CLOCK_MONOTONIC, &start); }
-    int total_primes = sieve_of_eratosthenes_linear(rank, exp2(n), size);
+    sieve_of_eratosthenes_linear(rank, exp2(n), size);
     if ( rank == ROOT) {
       clock_gettime(CLOCK_MONOTONIC, &finish);
-      cout << "2," << n << "," << size << ", Number of primes - " << total_primes << endl;
     }
   } else if (run_method == PARALLEL) {
     string_stream_n_threads << args[1];
@@ -161,19 +135,18 @@ int main (int argc, char ** argv) {
     string_stream_n >> n;
 
     if ( rank == ROOT) { clock_gettime(CLOCK_MONOTONIC, &start); }
-    int total_primes = sieve_of_eratosthenes_parallel(rank, exp2(n), size, n_threads);
+    sieve_of_eratosthenes_parallel(rank, exp2(n), size, n_threads);
     if ( rank == ROOT) {
       clock_gettime(CLOCK_MONOTONIC, &finish);
-      cout << "2," << n << "," << size << ", Number of primes" << total_primes << ", Type" << run_method << ", Number of threads" << n_threads << endl;
     }
   }
   if ( rank == ROOT) {
     elapsed = (finish.tv_sec - start.tv_sec);
   	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
-  	sprintf(time_string, "Time: %3.3f seconds\n", (double)elapsed);
-  	cout << time_string;
+  	sprintf(time_string, "%3.3f", (double)elapsed);
+    print_papi_events();
+    cout << "mpi," << run_method << "," << n << "," << size << "," << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
   }
-  if (rank == ROOT) { print_papi_events(); }
   stop_papi_events();
   MPI::Finalize();
 

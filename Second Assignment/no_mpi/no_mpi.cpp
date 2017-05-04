@@ -26,7 +26,6 @@ void sieve_of_eratosthenes_linear(long long n) {
                 prime[i] = false;
         }
     }
-
 }
 void sieve_of_eratosthenes_parallel(int n_threads, long long n) {
     vector<bool> prime(n-1, true);
@@ -39,7 +38,7 @@ void sieve_of_eratosthenes_parallel(int n_threads, long long n) {
         if (prime[p] == true) {
             for (i = p * 2; i <= n; i += p)
                 prime[i] = false;
-        }
+    }
 }
 int main (int argc, char ** argv) {
 
@@ -92,9 +91,9 @@ int main (int argc, char ** argv) {
 
   elapsed = (finish.tv_sec - start.tv_sec);
 	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
-	sprintf(time_string, "Time: %3.3f seconds\n", (double)elapsed);
-	cout << time_string;
-
+	sprintf(time_string, "%3.3f", (double)elapsed);
   print_papi_events();
+  cout << "no_mpi," << run_method << "," << n << "," << "no_mpi" << ","  << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
+
   stop_papi_events();
 }
