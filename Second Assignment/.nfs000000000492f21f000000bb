@@ -1,0 +1,281 @@
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,25,12,36832,5222,0.007 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,25,no_mpi,17204133,13074771,0.094 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,26,12,70408,9031,0.009 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,26,no_mpi,37152629,26631448,0.228 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,27,12,141141,9154,0.029 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,27,no_mpi,79511437,65394789,0.684 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,28,12,267979,16163,0.045 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,28,no_mpi,168636828,145953675,1.597 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,29,12,563446,34204,0.082 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,29,no_mpi,356529994,313087777,3.562 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,30,12,1392698,110085,0.157 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,30,no_mpi,750474202,663406515,7.795 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,31,12,2786042,383224,0.420 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,31,no_mpi,1573026459,1399513818,16.319 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,linear,32,12,5559775,431232,0.956 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,linear,32,no_mpi,3280844552,2932303142,33.477 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,25,12,34215,5306,0.007 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,25,no_mpi,17211664,12956960,0.094 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,25,12,19338,5254,0.007 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,25,no_mpi,10608892,7346286,0.060 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,25,12,14762,5062,0.008 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,25,no_mpi,6906077,5121566,0.042 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,25,12,17046,5249,0.027 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,25,no_mpi,3638310,3219718,0.033 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,26,12,81991,8695,0.012 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,26,no_mpi,37166022,26020740,0.228 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,26,12,38645,7962,0.014 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,26,no_mpi,21718445,16253833,0.133 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,26,12,27947,7005,0.014 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,26,no_mpi,14715005,10782074,0.092 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,26,12,30985,7133,0.026 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,26,no_mpi,13219019,8889972,0.075 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,27,12,136755,10938,0.018 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,27,no_mpi,79472753,65870702,0.690 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,27,12,73623,7737,0.023 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,27,no_mpi,53602010,47040007,0.431 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,27,12,51728,8078,0.024 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,27,no_mpi,38622628,33343566,0.338 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,27,12,44551,7560,0.025 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,27,no_mpi,25777855,23985421,0.279 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,28,12,305684,22681,0.047 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,28,no_mpi,168614946,146018566,1.599 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,28,12,137636,10154,0.035 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,28,no_mpi,113141511,99300125,1.003 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,28,12,167422,10195,0.036 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,28,no_mpi,81722155,71000893,0.801 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,28,12,105266,21457,0.044 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,28,no_mpi,64646777,56601529,0.706 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,29,12,565265,45153,0.077 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,29,no_mpi,356390812,312733991,3.772 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,29,12,334175,35282,0.063 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,29,no_mpi,222211820,198271682,2.591 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,29,12,248851,56430,0.065 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,29,no_mpi,163282713,143980932,1.975 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,29,12,223800,35999,0.095 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,29,no_mpi,108142384,99405519,1.820 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,30,12,1394771,168753,0.162 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,30,no_mpi,751545570,663562744,8.124 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,30,12,752584,89750,0.124 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,30,no_mpi,484583722,430960157,4.936 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,30,12,549267,61902,0.131 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,30,no_mpi,335840759,313410599,4.209 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,30,12,445093,88037,0.155 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,30,no_mpi,232469122,218770576,3.499 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,31,12,2780617,266493,0.301 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,31,no_mpi,1572420843,1401146614,15.894 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,31,12,1531101,145891,0.253 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,31,no_mpi,823764399,738882895,11.740 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,31,12,1150276,207285,0.196 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,31,no_mpi,732662095,681460088,8.983 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,31,12,947165,134932,0.254 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,31,no_mpi,536797059,494577010,7.625 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,32,12,5587714,493301,0.654 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,32,no_mpi,3281674824,2925058477,33.865 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,32,12,3109512,433365,0.500 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,32,no_mpi,2136224247,1924000964,21.189 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,32,12,2295046,315219,0.548 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,32,no_mpi,1430102254,1280156587,19.157 seconds
+
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+mpi,parallel,32,12,1886900,372021,0.541 seconds
+
+Program, Type, N, Size, L1 DCM, L2 DCM, Time
+no_mpi,parallel,32,no_mpi,1027913996,968312278,15.991 seconds
+
+
