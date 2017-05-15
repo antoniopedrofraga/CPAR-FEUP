@@ -32,7 +32,7 @@ void sieve_of_eratosthenes_parallel(int n_threads, long long n) {
     long long p, i;
     long long limit = sqrt(n);
 
-    #pragma omp parallel for num_threads(n_threads)
+    #pragma omp parallel for schedule(dynamic) num_threads(n_threads)
     for (p = 2; p <= limit; p++)
         if (prime[p] == true) {
             for (i = p * 2; i <= n; i += p)
