@@ -96,14 +96,14 @@ int main (int argc, char ** argv) {
   double elapsed;
 
   vector<string> args;
-  stringstream string_stream_n, string_stream_n_threads;
+  stringstream string_stream_n, string_stream_n_threads, string_stream_p;
   string run_method;
-  unsigned int n, n_threads;
+  unsigned int n, n_threads = -1;
   char time_string[100];
-  int ret, size, rank;
+  int ret, size, rank, processes;
 
 
-  if (argc != 3 && argc != 4) {
+  if (argc != 4 && argc != 5) {
     cout << "Please insert the correct number arguments:" << endl;
     cout << "./primes <linear/paralel> (<n_threads>) <exp_of_2>" << endl;
     return -1;
@@ -111,6 +111,8 @@ int main (int argc, char ** argv) {
 
   copy(argv + 1, argv + argc, back_inserter(args));
   run_method = args[0];
+  string_stream_p << args[1];
+  string_stream_p >> processes;
 
   if (!(run_method == PARALLEL || run_method == LINEAR)) {
     cout << "Please define the 1st argument as <linear/parallel>" << endl;
@@ -120,7 +122,7 @@ int main (int argc, char ** argv) {
   init_mpi(&size, &rank);
   init_papi_events();
   if (run_method == LINEAR) {
-    string_stream_n << args[1];
+    string_stream_n << args[2];
     string_stream_n >> n;
     if ( rank == ROOT) { clock_gettime(CLOCK_MONOTONIC, &start); }
     sieve_of_eratosthenes_linear(rank, exp2(n), size);
@@ -128,9 +130,9 @@ int main (int argc, char ** argv) {
       clock_gettime(CLOCK_MONOTONIC, &finish);
     }
   } else if (run_method == PARALLEL) {
-    string_stream_n_threads << args[1];
+    string_stream_n_threads << args[2];
     string_stream_n_threads >> n_threads;
-    string_stream_n << args[2];
+    string_stream_n << args[3];
     string_stream_n >> n;
 
     if ( rank == ROOT) { clock_gettime(CLOCK_MONOTONIC, &start); }
@@ -145,7 +147,7 @@ int main (int argc, char ** argv) {
   	sprintf(time_string, "%3.3f", (double)elapsed);
     print_papi_events();
     int num_threads = n_threads == -1 ? 1 : n_threads;
-    cout << "no_mpi," << num_threads << "," << run_method << "," << n << "," << "no_mpi" << ","  << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
+    cout << "mpi," << num_threads << "," << run_method << "," << n << "," << processes << ","  << get_l1_dcm() << "," << get_l2_dcm() << "," << time_string << endl << endl;
   }
   stop_papi_events();
   MPI::Finalize();
