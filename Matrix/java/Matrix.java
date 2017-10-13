@@ -22,11 +22,9 @@ public class Matrix {
 
 		for(int i = 0; i < lines; i++)
 		for(int j = 0; j < cols; j++) {	
-			temp = 0;
 			for(int k = 0; k < lines; k++) {
-				temp += pha[i * lines + k] * phb[k * cols + j];
+				phc[i * lines + j] += pha[i * lines + k] * phb[k * cols + j];
 			}
-			phc[i * lines + j] = temp;
 		}
 		
 		long diffTime = (System.currentTimeMillis() - startTime);
