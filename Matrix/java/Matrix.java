@@ -19,11 +19,12 @@ public class Matrix {
 			phb[i * cols + j] = (double)(i + 1);
 		
 		long startTime = System.currentTimeMillis();
+		int size = lines;
 
-		for(int i = 0; i < lines; i++)
-		for(int j = 0; j < cols; j++) {	
-			for(int k = 0; k < lines; k++) {
-				phc[i * lines + j] += pha[i * lines + k] * phb[k * cols + j];
+		for(int i = 0; i < size; i++)
+		for(int j = 0; j < size; j++) {	
+			for(int k = 0; k < size; k++) {
+				phc[i * size + j] += pha[i * size + k] * phb[k * size + j];
 			}
 		}
 		
@@ -48,11 +49,12 @@ public class Matrix {
 			phb[i * cols + j] = (double)(i + 1);
 		
 		long startTime = System.currentTimeMillis();
-
-		for(int i = 0; i < lines; i++)
-		for(int j = 0; j < cols; j++) {	
-			for(int k = 0; k < lines; k++) {
-				phc[i * lines + k] += pha[i * lines + j] * phb[j * cols + k];
+		int size = lines;
+		
+		for(int i = 0; i < size; i++)
+		for(int j = 0; j < size; j++) {	
+			for(int k = 0; k < size; k++) {
+				phc[i * size + k] += pha[i * size + j] * phb[j * size + k];
 			}
 		}
 		
